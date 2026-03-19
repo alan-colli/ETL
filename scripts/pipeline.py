@@ -1,6 +1,10 @@
 import pandas as pd
 from pathlib import Path
 
+import os
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_PATH = BASE_DIR / 'data' / 'raw_data' / 'sp500_raw' / 'sp500_master_50years.csv'
 
@@ -113,6 +117,26 @@ def transform(df: pd.DataFrame) -> pd.DataFrame:
     print(f"[TRANSFORM] {df.shape[0]:,} rows | {df.shape[1]} columns")
     return df
 
+#LOAD
+
+load_dotenv()
+
+def load(df: pd.DataFrame) -> None:
+    engine = create_engine(
+        f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+        f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+    )
+
+    df.to_sql(
+        name='sp500_prices',
+        con=engine,
+        if_exists='replace',
+        index=False,
+        chunksize=5000,
+        method='multi'
+    )
+
+    print(f"[LOAD] Data loaded into table sp500_prices")
 
 #SAVE
 
@@ -127,6 +151,7 @@ def main():
     df = clean(df)
     df = transform(df)
     save(df)
+    load(df)
 
 if __name__ == '__main__':
     main()
