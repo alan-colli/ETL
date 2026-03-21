@@ -1,4 +1,4 @@
-##📈 S&P 500 ETL & Market Analysis
+#📈 S&P 500 ETL & Market Analysis
 ETL pipeline analyzing 50+ years of S&P 500 data to answer one question:
 How do market sectors behave during historical crises ?
 
