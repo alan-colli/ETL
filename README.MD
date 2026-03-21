@@ -36,7 +36,7 @@ ETL pipeline analyzing 50+ years of S&P 500 data to answer one question:
 ## 🗃️ Dataset
 1,014,000 rows · 98 companies · 11 sectors · 1970–2026
 
-[Kaggle Source](https://www.kaggle.com/code/samyakrajbayar/s-and-p-500) — place CSV in `data/raw_data/`
+[Kaggle Source](https://www.kaggle.com/datasets/samyakrajbayar/s-and-p-500-complete-historical-dataset-50-years/data) — place CSV in `data/raw_data/`
 
 ---
 
